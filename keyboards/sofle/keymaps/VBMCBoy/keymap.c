@@ -62,13 +62,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* GAME
  * ,----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      | F1   | F2   | F3   | F4   | F5   |                    | F6   | F7   |  F8  | F9   | F10  | F11   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Esc  | Ins  | Pscr | Menu |      |      |                    |      | PWrd |  Up  | NWrd | DLine| Bspc |
+ * | Esc  | Ins  | Pscr | Menu |      |      |                    |      |PrntSc|ScrLck|Pause |      | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  | LAt  | LCtl |LShift|      | Caps |-------.    ,-------|      | Left | Down | Rigth|  Del | Bspc |
+ * | Tab  | LAt  | LCtl |LShift|      | Caps |-------.    ,-------|      | Ins  | Home | PgUp |      | Bspc |
  * |------+------+------+------+------+------|  MUTE  |    |       |------+------+------+------+------+------|
- * |Shift | Undo |  Cut | Copy | Paste|      |-------|    |-------|      | LStr |      | LEnd |      | Shift|
+ * |Shift | Undo |  Cut | Copy | Paste|      |-------|    |-------|      | Del  | End  | PgDn |      | TRNS |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LGUI | LAlt | LCTR |SYMB | /Enter  /       \Space \  |GAME | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
