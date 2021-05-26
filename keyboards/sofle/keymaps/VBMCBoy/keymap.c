@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| TRNS   |   | TRNS  |------+------+------+------+------+------|
  * | TRNS |      |      |      |      |      |-------|    |-------|  U   |  B   | Del  | End  | PgDn | TRNS |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | TRNS | LAlt |QWERTY|     |  /Enter  /       \Space \  |      | TRNS | TRNS | TRNS |
+ *            | TRNS | LAlt |QWERTY|     |  /Enter  /       \Space \  | TRNS | TRNS | TRNS | TRNS |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,                       KC_R,  KC_E,  KC_PSCR, KC_SLCK, KC_PAUS, KC_F12, \
   _______, KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT, XXXXXXX,                       KC_I,  KC_S,  KC_INS,  KC_HOME, KC_PGUP, KC_BSPC, \
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  _______,    _______, KC_U,  KC_B,  KC_DEL,  KC_END,  KC_PGDN, _______, \
-        _______, _______, TO(_QWERTY), _______, KC_ENT,                      KC_SPC, XXXXXXX, _______, _______, _______ \
+        _______, _______, TO(_QWERTY), _______, KC_ENT,                      KC_SPC, _______, _______, _______, _______ \
 ),
 };
 
