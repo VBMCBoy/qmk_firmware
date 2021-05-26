@@ -8,8 +8,6 @@ enum sofle_layers {
 
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
-    KC_GAME,
-    KC_SYMB,
     KC_OMNU,  // OLED menu
     KC_OSCT,  // selected ok
 };
