@@ -6,4 +6,4 @@ for more options.
 */
 
 #define NO_ACTION_ONESHOT
-#define SPLIT_USB_DETECT
+#define MASTER_RIGHT
