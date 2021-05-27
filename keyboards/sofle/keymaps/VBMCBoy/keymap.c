@@ -7,8 +7,7 @@ enum sofle_layers {
 };
 
 enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_OMNU,  // OLED menu
+    KC_OMNU = SAFE_RANGE,  // OLED menu
     KC_OSCT,  // selected ok
 };
 
@@ -129,13 +128,6 @@ void oled_task_user(void) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case KC_QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-    }
     return true;
 }
 
