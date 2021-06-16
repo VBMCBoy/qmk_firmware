@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  OMNU |    | OSCT  |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LCTR | SYMB | LGUI | LALT | /Enter  /       \Space \  | GAME | RALT | MENU | RGUI |   Menu works as the compose key
+ *            | LCTR | SYMB | LALT | LGUI | /Enter  /       \Space \  | MENU | RALT | GAME | RGUI |   Menu works as the compose key
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -46,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| TRNS  |    | TRNS  |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|      |   1  |   2  |   3  |   =  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | TRNS | TRNS | TRNS | TRNS | /Space  /       \ ESC  \  |QWERTY|   0  |   .  | Enter|
+ *            | TRNS | TRNS | TRNS | TRNS | /Space  /       \ ESC  \  |  0   |  .   |QWERTY| Enter|
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,    KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                       XXXXXXX,   KC_P7,    KC_P8,     KC_P9,    KC_PPLS,  KC_TRNS, \
   KC_LCTRL,    KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                       XXXXXXX,   KC_P4,    KC_P5,     KC_P6,    KC_PCMM,  XXXXXXX, \
   KC_LSFT,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, _______,     _______, XXXXXXX,   KC_P1,    KC_P2,     KC_P3,    KC_PEQL,  KC_TRNS, \
-        _______, _______, _______, _______, KC_SPC,                 KC_ESC, TO(_QWERTY), KC_P0, KC_PDOT, KC_PENT\
+        _______, _______, _______, _______, KC_SPC,                 KC_ESC, KC_P0, KC_PDOT, TO(_QWERTY), KC_PENT\
 ),
 /* SYMB
  * ,----------------------------------------.                    ,-----------------------------------------.
