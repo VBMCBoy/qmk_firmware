@@ -5,4 +5,5 @@ EXTRAKEY_ENABLE = yes
 LTO_ENABLE = yes
 NKRO_ENABLE = yes
 BOOTLOADER = atmel-dfu
+COMMAND_ENABLE = no
 # RAW_ENABLE = yes
