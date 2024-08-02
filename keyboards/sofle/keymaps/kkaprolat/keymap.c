@@ -85,21 +85,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------------.                    ,-----------------------------------------.
  * | TRNS | F1   | F2   | F3   | F4   | F5   |                    | F6   | F7   |  F8  | F9   | F10  | F11   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | TRNS |      |      |      |      |      |                    |  R   |  E   |PrntSc|ScrLck|Pause | F12  |
+ * | TRNS |      |      |      |      |      |                    |      |      |PrntSc|ScrLck|Pause | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | TRNS | LEFT |  UP  | DOWN | RIGHT|      |-------.    ,-------|  I   |  S   | Ins  | Home | PgUp | Bspc |
+ * | TRNS | LEFT |  UP  | DOWN | RIGHT|      |-------.    ,-------|      |      | Ins  | Home | PgUp | Bspc |
  * |------+------+------+------+------+------| TRNS   |   | TRNS  |------+------+------+------+------+------|
- * | TRNS |      |      |      |      |      |-------|    |-------|  U   |  B   | Del  | End  | PgDn | TRNS |
+ * | TRNS |      |      |      |      |      |-------|    |-------|      |      | Del  | End  | PgDn | TRNS |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | TRNS |QWERTY| TRNS |     |  /Enter  /       \Space \  | TRNS | TRNS | TRNS | TRNS |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
 [_SYMB] = LAYOUT( \
-  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,                         KC_F6, KC_F7, KC_F8,   KC_F9,   KC_F10,  KC_F11, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,                       KC_R,  KC_E,  KC_PSCR, KC_SLCT, KC_PAUS, KC_F12, \
-  _______, KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT, XXXXXXX,                       KC_I,  KC_S,  KC_INS,  KC_HOME, KC_PGUP, KC_BSPC, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  _______,    _______, KC_U,  KC_B,  KC_DEL,  KC_END,  KC_PGDN, _______, \
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,                         KC_F6,    KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,                       XXXXXXX,  XXXXXXX,  KC_PSCR, KC_SLCT, KC_PAUS, KC_F12, \
+  _______, KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT, XXXXXXX,                       XXXXXXX,  XXXXXXX,  KC_INS,  KC_HOME, KC_PGUP, KC_BSPC, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  _______,    _______, XXXXXXX,  XXXXXXX,  KC_DEL,  KC_END,  KC_PGDN, _______, \
         _______, TO(_QWERTY), _______, _______, KC_ENT,                      KC_SPC, _______, _______, _______, _______ \
 ),
 };
