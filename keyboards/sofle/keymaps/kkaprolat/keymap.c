@@ -6,6 +6,30 @@ enum sofle_layers {
     _SYMB,
 };
 
+enum settings {
+    VOLUME,
+    BRIGHTNESS,
+    SHUTDOWN,
+    SUSPEND,
+    SYSRQ,
+    MUSIC,
+    PAGE,
+} selected_menu;
+#define SETTING_LENGTH 7
+
+enum sysrq_keys {
+  R,
+  E,
+  I,
+  S,
+  U,
+  B,
+  F,
+  O,
+} selected_sysrq;
+#define SYSRQ_LENGTH 8
+
+
 enum custom_keycodes {
     KC_OMNU = SAFE_RANGE,  // OLED menu
     KC_OSCT,  // selected ok
@@ -82,52 +106,169 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef OLED_ENABLE
 
-static void render_logo(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-        0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-        0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
-    };
+const char* get_setting_identifier(int sel) {
+        switch (sel) {
+                case BRIGHTNESS: return "brightness";
+                case VOLUME: return "volume";
+                case SHUTDOWN: return "shutdown";
+                case SUSPEND: return "suspend";
+                case MUSIC: return "music";
+                case PAGE: return "page";
+                case SYSRQ: return "SysRq";
+                default: return "default??";
+        }
 
-    oled_write_P(qmk_logo, false);
+}
+
+const char* get_magic_identifier(int sel) {
+  switch (sel) {
+  case R:
+    return "R - unraw";
+  case E:
+    return "E - TERM";
+  case I:
+    return "I - KILL";
+  case S:
+    return "S - sync";
+  case U:
+    return "U - remount";
+  case B:
+    return "B - reboot";
+  case F:
+    return "F - OOM";
+  case O:
+    return "O - off";
+  default:
+    return "default??";
+  }
+
 }
 
 static void print_status_narrow(void) {
-    // Print current layer
-    oled_write_ln_P(PSTR("LAYER"), false);
-    switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Base\n"), false);
-            break;
-        case _GAME:
-            oled_write_P(PSTR("Game\n"), false);
-            break;
-        case _SYMB:
-            oled_write_P(PSTR("Symb\n"), false);
-            break;
-        default:
-            oled_write_ln_P(PSTR("Undef"), false);
-    }
+        // Print current layer
+        oled_write_ln_P(PSTR("LAYER"), false);
+        switch (get_highest_layer(layer_state)) {
+                case _QWERTY:
+                        oled_write_P(PSTR("Base\n"), false);
+                        break;
+                case _GAME:
+                        oled_write_P(PSTR("Game\n"), false);
+                        break;
+                case _SYMB:
+                        oled_write_P(PSTR("Symb\n"), false);
+                        break;
+                default:
+                        oled_write_ln_P(PSTR("Undef"), false);
+        }
 }
 
+static void print_menu(void) {
+  for (
+       int i = (selected_menu + SETTING_LENGTH-1) % SETTING_LENGTH; // start at the currently selected menu minus one (i.e. the previous item)
+       i != ((selected_menu+oled_max_lines()-1) % SETTING_LENGTH); // until we have advanced so many items, that one line on the OLED stays free
+       i = (i+1) % SETTING_LENGTH // each step, increment i (the displayed item), wrapping around
+   ) {
+                if (i == selected_menu) { // the selected item should be highlighted
+                        char dest[oled_max_chars()];
+                        dest[0] = '\0';
+                        strncat(dest, " ", oled_max_chars()-1); // padding/indentation for selected option
+                        oled_write_ln(strncat(dest, get_setting_identifier(i), oled_max_chars()-1), true);
+                } else {
+                        oled_write_ln(get_setting_identifier(i), false);
+                }
+        }
+
+        if (selected_menu == SYSRQ) {
+        int row = 0;
+        for (
+             int i = (selected_sysrq + SYSRQ_LENGTH-1) % SYSRQ_LENGTH;
+             i != ((selected_sysrq+oled_max_lines()-1) % SYSRQ_LENGTH);
+             i = (i+1) % SYSRQ_LENGTH
+         ) {
+                oled_set_cursor(oled_max_chars()-12, row++); // start writing again at the top, but next to the other menu
+                if (i == selected_sysrq) {
+                        char dest[oled_max_chars()];
+                        dest[0] = '\0';
+                        /* strncat(dest, " ", oled_max_chars()-1); // padding/indentation for selected option */
+                        oled_write_ln(strncat(dest, get_magic_identifier(i), oled_max_chars()-1), true);
+                } else {
+                        oled_write_ln(get_magic_identifier(i), false);
+                }
+        }
+  }
+}
+
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
-        return OLED_ROTATION_270;
-    }
+  if (is_keyboard_master()) {
+    return OLED_ROTATION_180;
+  }
     return rotation;
 }
 
-void oled_task_user(void) {
-    if (is_keyboard_master()) {
-        print_status_narrow();
-    } else {
-        render_logo();
-    }
+bool oled_task_user(void) {
+  if (is_keyboard_master()) {
+    print_menu();
+  } else {
+    print_status_narrow();
+  }
+  return false;
 }
 
 #endif
 
+void run_sysrq(int sel) {
+  register_code(KC_LALT);
+  register_code(KC_PSCR);
+  switch (sel) {
+  case R:
+    register_code(KC_R);
+    break;
+  case E:
+    register_code(KC_E);
+    break;
+  case I:
+    register_code(KC_I);
+    break;
+  case S:
+    register_code(KC_S);
+    break;
+  case U:
+    register_code(KC_U);
+    break;
+  case B:
+    register_code(KC_B);
+    break;
+  case F:
+    register_code(KC_F);
+    break;
+  case O:
+    register_code(KC_O);
+    break;
+  default:
+    clear_keyboard();
+  }
+    clear_keyboard();
+
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+        switch (keycode) {
+                case KC_OSCT: {
+                              switch (selected_menu) {
+                                      case BRIGHTNESS: break;
+                                      case VOLUME: if (record->event.pressed) tap_code(KC_MUTE); return true;
+                                      case SHUTDOWN: if (record->event.pressed) tap_code(KC_PWR); oled_off(); return true;
+                                      case SUSPEND: if (record->event.pressed) tap_code(KC_SLEP); oled_off(); return true;
+                                      case MUSIC: if (record->event.pressed) tap_code(KC_MPLY); return true;
+                                      case SYSRQ: if (record->event.pressed) run_sysrq(selected_sysrq); return true;
+                                      case PAGE: break;
+                                      default: break;
+                              }
+                              }
+                default: return true;
+
+        }
     return true;
 }
 
@@ -135,17 +276,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
+        if (!clockwise) {
+                selected_menu = (selected_menu+1) % SETTING_LENGTH;
         } else {
-            tap_code(KC_VOLD);
+                selected_menu = (selected_menu + SETTING_LENGTH-1) % SETTING_LENGTH;
         }
     } else if (index == 1) {
-        if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
-            tap_code(KC_PGUP);
-        }
+            switch (selected_menu) {
+                    case BRIGHTNESS: if (clockwise) tap_code(KC_BRIU); else tap_code(KC_BRID); break;
+                    case VOLUME: if (clockwise) tap_code(KC_VOLU); else tap_code(KC_VOLD); break;
+                    case SHUTDOWN: break;
+                    case SUSPEND: break;
+                    case MUSIC: if (clockwise) tap_code(KC_MNXT); else tap_code(KC_MPRV); break;
+                    case PAGE: if (clockwise) tap_code(KC_PGDN); else tap_code(KC_PGUP); break;
+                    case SYSRQ: if (clockwise) selected_sysrq = (selected_sysrq+1) % SYSRQ_LENGTH; else selected_sysrq = (selected_sysrq + SYSRQ_LENGTH-1) % SYSRQ_LENGTH; break;
+                    default: break;
+            }
     }
     return false;
 }
